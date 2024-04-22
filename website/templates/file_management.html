@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %}File Management{% endblock %} {%
+block content %}
+
+<head>
+  <title>Upload Files</title>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header bg-dark text-white">
+        <h3 class="mb-0">Upload Files</h3>
+      </div>
+      <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="file">Choose File(s)</label>
+            <input
+              type="file"
+              class="form-control-file"
+              id="file"
+              name="file"
+              multiple
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="card">
+      <div class="card-header bg-dark text-white">
+        <h3 class="mb-1">Uploaded Files</h3>
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+          {% for file in user_files %}
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <div>{{ file.filename }}</div>
+            <div>
+              <a
+                href="{{ url_for('crypt.download_file', filename=file.filename) }}"
+                download
+              >
+                <button type="button" class="btn btn-sm btn-primary">
+                  Download
+                </button>
+              </a>
+              &nbsp; &nbsp;
+              <button
+                type="button"
+                class="close"
+                onClick="deleteFile({{ file.id }})"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+
+{% endblock %}

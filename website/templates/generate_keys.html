@@ -1,0 +1,31 @@
+<!--  @ts-nocheck  -->
+
+{% extends "base.html" %} {% block title %}Generate Keys{% endblock %} {% block
+content %}
+
+<body>
+  <div class="container">
+    <h1>Generate Keys</h1>
+    <br />
+    <form action="{{ url_for('crypt.generate_keys') }}" method="POST">
+      <input type="hidden" name="user_id" value="{{ user.id }}" />
+      <button type="submit" class="btn btn-primary">Generate Key</button>
+    </form>
+    <br />
+
+    <h2>Keys ({{ current_user.num_keys}}):</h2>
+    <ul class="list-group mb-3">
+      {% for key in user.keys %}
+      <li class="list-group-item">
+        {{ key.key_value }}
+
+        <button type="button" class="close" onClick="deleteKey({{ key.id }})">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+
+{% endblock %}
